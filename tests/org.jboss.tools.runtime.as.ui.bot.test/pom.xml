@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.jboss.tools.runtime.as.ui.bot.test</groupId>
 	<artifactId>org.jboss.tools.runtime.as.ui.bot.test</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>4.0.0-SNAPSHOT</version>
 
 	<packaging>eclipse-test-plugin</packaging>
 
@@ -17,20 +17,12 @@
 		<requirementsDirectory>${project.build.directory}/requirements</requirementsDirectory>
 		<jboss-as-7>${requirementsDirectory}/jboss-as-7.1.1.Final/</jboss-as-7>
 		<jboss-seam-2.2>${requirementsDirectory}/jboss-seam-2.2.2.Final/</jboss-seam-2.2>
-		<jboss-seam-2.3>${requirementsDirectory}/jboss-seam-2.3.0.Beta1/</jboss-seam-2.3>
+		<jboss-seam-2.3>${requirementsDirectory}/jboss-seam-2.3.0.Final/</jboss-seam-2.3>
 		<test.class>org.jboss.tools.runtime.as.ui.bot.test.ProjectTestsSuite</test.class>
-		<additionalSystemProperties></additionalSystemProperties>
-		<systemProperties>${additionalSystemProperties}</systemProperties>
 		<surefire.timeout>7200</surefire.timeout>
 	</properties>
 
 	<profiles>
-		<profile>
-			<id>debug</id>
-			<properties>
-				<additionalSystemProperties>-Xdebug -Xrunjdwp:transport=dt_socket,address=8001,server=y,suspend=y</additionalSystemProperties>
-			</properties>
-		</profile>
 	</profiles>
 	
 	<pluginRepositories>
@@ -49,7 +41,7 @@
 	<repositories>
 			<repository>
 				<id>red_deer</id>
-				<url>http://p2-reddeer.rhcloud.com</url>
+				<url>http://p2-reddeer.rhcloud.com/stable</url>
 				<layout>p2</layout>
 				<snapshots>
 					<enabled>true</enabled>
@@ -105,15 +97,15 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>install-seam-2.3.0.Beta1</id>
+						<id>install-seam-2.3.0.Final</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.3.0.Beta1/jboss-seam-2.3.0.Beta1-dist.zip</url>
+							<url>http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.3.0.Final/jboss-seam-distribution-2.3.0.Final-dist.zip</url>
 							<unpack>true</unpack>
-							<md5>85c2f188e1efe5291ba3aa1f3c0c22d0</md5>
+							<md5>f5fcb2ae2b17514feb2a2d3bbf5f4e2b</md5>
 							<outputDirectory>${requirementsDirectory}/</outputDirectory>
 						</configuration>
 					</execution>

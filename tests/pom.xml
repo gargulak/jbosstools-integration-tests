@@ -11,12 +11,18 @@
 	<artifactId>tests</artifactId>
 	<name>integration-tests.tests</name>
 	<packaging>pom</packaging>
+  
+        <properties>
+            <surefire.timeout>7200</surefire.timeout>
+            <memoryOptions2>-XX:MaxPermSize=512m</memoryOptions2>
+        </properties>
 
 	<modules>
 		<module>org.jboss.ide.eclipse.as.ui.bot.test</module>
 		<module>org.jboss.tools.archives.ui.bot.test</module>
 		<module>org.jboss.tools.bpel.ui.bot.test</module>
 		<module>org.jboss.tools.cdi.bot.test</module>
+		<module>org.jboss.tools.cdi.reddeer</module>
 		<module>org.jboss.tools.cdi.seam3.bot.test</module>
 		<module>org.jboss.tools.central.test.ui.bot</module>
 		<module>org.jboss.tools.dummy.ui.bot.test</module>
@@ -27,7 +33,6 @@
 		<module>org.jboss.tools.jbpm.ui.bot.test</module>
 		<module>org.jboss.tools.jsf.ui.bot.test</module>
 		<module>org.jboss.tools.jst.ui.bot.test</module>
-		<module>org.jboss.tools.jst.ui.firstrun.bot.test</module>
 		<module>org.jboss.tools.maven.ui.bot.test</module>
 		<module>org.jboss.tools.openshift.ui.bot.test</module>
 		<module>org.jboss.tools.portlet.ui.bot.test</module>
@@ -39,5 +44,21 @@
 		<module>org.jboss.tools.vpe.ui.bot.test</module>
 		<module>org.jboss.tools.ws.ui.bot.test</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>windows-xp-memory-options</id>
+			<activation>
+				<os>
+					<name>Windows XP</name>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<memoryOptions1>-Xms384m -Xmx768m -XX:PermSize=192m</memoryOptions1>
+		        <memoryOptions2>-XX:MaxPermSize=384m</memoryOptions2>
+			</properties>
+		</profile>
+	</profiles>
+	
 </project>
 

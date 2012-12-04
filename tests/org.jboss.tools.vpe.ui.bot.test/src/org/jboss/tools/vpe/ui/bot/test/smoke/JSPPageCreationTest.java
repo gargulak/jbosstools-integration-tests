@@ -11,9 +11,11 @@
 package org.jboss.tools.vpe.ui.bot.test.smoke;
 
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.jboss.tools.ui.bot.ext.Timing;
+import org.jboss.tools.ui.bot.ext.condition.ShellIsActiveCondition;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.test.WidgetVariables;
@@ -56,19 +58,23 @@ public class JSPPageCreationTest extends VPEEditorTestCase{
     projectTreeItem.collapse();
     projectTreeItem.expand();
     
-    SWTBotTreeItem webContentTreeItem = projectTreeItem.expand().getNode(IDELabel.WebProjectsTree.WEB_CONTENT);
+    SWTBotTreeItem pagesTreeItem = projectTreeItem.expand()
+        .getNode(IDELabel.WebProjectsTree.WEB_CONTENT)
+        .expand()
+        .getNode(IDELabel.WebProjectsTree.PAGES);
     
-    webContentTreeItem.select();
+    pagesTreeItem.select();
     // create new JSP file
     open.newObject(ActionItem.NewObject.WebJSP.LABEL);
-    bot.shell(IDELabel.Shell.NEW_JSP_FILE).activate();
+    SWTBotShell shell = bot.shell(IDELabel.Shell.NEW_JSP_FILE).activate();
     bot.textWithLabel(ActionItem.NewObject.WebJSP.TEXT_FILE_NAME).setText(TEST_NEW_JSP_FILE_NAME);
     bot.button(IDELabel.Button.NEXT).click();
     bot.table().select(IDELabel.NewJSPFileDialog.JSP_TEMPLATE);
     bot.button(IDELabel.Button.FINISH).click();
     bot.sleep(Timing.time2S());
-    webContentTreeItem.expand();
-    SWTBotTreeItem jspTestPageTreeItem = webContentTreeItem.getNode(TEST_NEW_JSP_FILE_NAME);
+    bot.waitWhile(new ShellIsActiveCondition(shell),Timing.time10S());
+    pagesTreeItem.expand();
+    SWTBotTreeItem jspTestPageTreeItem = pagesTreeItem.getNode(TEST_NEW_JSP_FILE_NAME);
     String checkResult = CheckFileChangesSaving.checkIt(bot, bot.editorByTitle(TEST_NEW_JSP_FILE_NAME).toTextEditor(),
       tree, jspTestPageTreeItem,
       SAVE_COMMENT, true);
